@@ -19,8 +19,22 @@ public class EstudanteService {
 		return repo.findAll();
 	}
 	
-	public void saveEstudante(Estudante obj) {
-		repo.save(obj);
+	public int saveEstudante(Estudante obj) {
+		if(campoVazio(obj)) return 1;
+		
+		try {
+			repo.save(obj);
+			return 0;
+		} catch (Exception e) {
+			return 2;
+		}
+		
 	}
+	
+	private boolean campoVazio(Estudante estu) {
+		if(estu.getEmail().isBlank() || estu.getNome().isBlank()) return true;
+		return false;
+	}
+
 	
 }

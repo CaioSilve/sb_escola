@@ -11,45 +11,24 @@
 
 
 
-<body>
+<body style="background-color: #3a3a3a;">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-            <img src="imgs/escola.ico" height="32px" width="32px" class="d-inline-block align-top" alt="">
-            Escola
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Estudantes <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Professores</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Salas</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Disicplinas</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+    <div th:replace="frags/fragNav :: nav"></div>
 
 	<div class="panel panel-default mt-5 mb-2" style="margin: 80px">
 		<div class="panel-heading">
-			<h1 class="panel-title display-3">Lista de Estudantes</h1>
+			<h1 class="panel-title display-3 text-light">Lista de Estudantes</h1>
 		</div>
 		<div class="panel-body">
+
+            <div class="row">
+                <div>
+                    <a th:href="@{/estudantes/novo}" class="btn btn-primary mb-3 ml-3">Adicionar estudante</a>
+                </div>
+            </div>
             
-            <table class="table table-hover table-striped">
-                <thead class="thead-dark">
+            <table class="table table-hover table-striped table-dark table-bordered">
+                <thead class="">
                     <tr>
                         <th>#</th>
                         <th>Nome</th>
@@ -58,7 +37,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="e : ${estudantes}">
+                    <tr th:each="e : ${estudantes}" th:class="${e.sala} ?: bg-info">
                         <td th:text="${e.id}"></td>
                         <td th:text="${e.nome}"></td>
                         <td th:text="${e.email}"></td>
