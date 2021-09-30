@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,8 +22,7 @@ public class Sala {
 	private Long id;
 	private String desc;
 	private int seme;
-	@OneToMany
-	@JoinTable(name = "tb_sala_disciplinas")
+	@ManyToMany
 	private List<Disciplina> discis = new ArrayList<>();
 	@JsonIgnore
 	@OneToMany(mappedBy = "sala")

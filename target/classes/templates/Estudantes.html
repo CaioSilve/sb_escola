@@ -7,15 +7,17 @@
 	<title>Estudantes</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 		integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 
 
-<body style="background-color: #3a3a3a;">
+<body>
 
     <div th:replace="frags/fragNav :: nav"></div>
 
-	<div class="panel panel-default mt-5 mb-2" style="margin: 80px">
+
+	<div class="panel panel-default mb-2 ml-5 lista">
 		<div class="panel-heading">
 			<h1 class="panel-title display-3 text-light">Lista de Estudantes</h1>
 		</div>
@@ -28,12 +30,13 @@
             </div>
             
             <table class="table table-hover table-striped table-dark table-bordered">
-                <thead class="">
+                <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Nome</th>
-                        <th>Email</th>
-                        <th>Sala</th>
+                        <th class="col col-sm-1">#</th>
+                        <th class="col col-sm-3">Nome</th>
+                        <th class="col col-sm-4">Email</th>
+                        <th class="col col-sm-auto">Sala</th>
+                        <th class="col col-sm-2">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,10 +45,28 @@
                         <td th:text="${e.nome}"></td>
                         <td th:text="${e.email}"></td>
                         <td th:text="${e.sala} ? ${e.sala.desc} : 'SEM SALA'"> </td>
+                        <td>
+                            <a th:href="@{/estudantes/editar/{id}(id=${e.id})}" class="btn btn-primary">Editar</a>
+						    <a th:href="@{/estudantes/deletar/{id}(id=${e.id})}" class="btn btn-danger ml-3">Deletar</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
 		</div>
 	</div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    const list = document.querySelectorAll('.list');
+    function activeLink(){
+      list.forEach((item) =>
+      item.classList.remove('active'));
+      this.classList.add('active');
+    }
+      list.forEach((item) =>
+      item.addEventListener('click', activeLink));
+  </script>
 </body>
 </html>

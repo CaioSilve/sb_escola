@@ -5,12 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import silveira.caio.escola.model.entity.Estudante;
-import silveira.caio.escola.repository.SalaRepository;
 import silveira.caio.escola.service.EstudanteService;
 
 @Controller
@@ -19,9 +19,6 @@ public class EstudanteController {
 
 	@Autowired
 	EstudanteService serv;
-	
-	@Autowired
-	SalaRepository salaRepo;
 	
 	@GetMapping
 	public ModelAndView getAllEstudantes(){
@@ -34,24 +31,23 @@ public class EstudanteController {
 		return mv;
 	}
 	
-	
 	@GetMapping("/novo")
 	public ModelAndView setEstuForm() {
-		ModelAndView mv = new ModelAndView("NovoEstudante");
+		ModelAndView mv = new ModelAndView("FormEstudante");
 		Estudante es = new Estudante();
 		
 		mv.addObject("estu", es);
-		mv.addObject("salas", salaRepo.findAll());
+		mv.addObject("salas", serv.findAllSalas());
 		mv.setStatus(HttpStatus.OK);
 		
 		
 		return mv;
 	}
 	
-	
 	@PostMapping
 	public ModelAndView addEstu(@ModelAttribute("estu") Estudante estu) {
 		ModelAndView mv = new ModelAndView();
+		
 		
 		switch (serv.saveEstudante(estu)) {
 		case 1:
@@ -67,6 +63,48 @@ public class EstudanteController {
 			mv.setViewName("redirect:/estudantes");
 			break;
 		}
+		return mv; 
+	}
+	
+	@GetMapping("/editar/{id}")
+	public ModelAndView setEditForm(@PathVariable Long id) {
+		ModelAndView mv = new ModelAndView("FormEstudante");
+		
+		
+		mv.addObject("estu", serv.findByIdEstu(id));
+		mv.addObject("salas", serv.findAllSalas());
+		mv.setStatus(HttpStatus.OK);
+		
+		return mv;
+	}
+	
+	@PostMapping("/editar/{id}")
+	public ModelAndView editEstu(@PathVariable Long id, @ModelAttribute Estudante estu) {
+		ModelAndView mv = new ModelAndView("redirect:/estudantes");
+		
+		if(serv.updateEstudante(id, estu)) {
+			mv.setStatus(HttpStatus.OK);
+		} else {
+			mv.setStatus(HttpStatus.BAD_REQUEST);
+			mv.setViewName("redirect:/estudantes/editar/" + id.toString());
+		}
+		
+		return mv;
+	}
+	
+	@GetMapping("/deletar/{id}")
+	public ModelAndView delEstu(@PathVariable Long id) {
+		ModelAndView mv = new ModelAndView("redirect:/estudantes");
+		
+		try {
+			serv.deleteEstudante(id);
+			mv.setStatus(HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.setStatus(HttpStatus.BAD_REQUEST);
+		}
+		
+		
 		return mv;
 	}
 	

@@ -4,44 +4,45 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width" />
-	<title>Novo Estudante</title>
+	<title>Formulário Estudantes</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 		integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 
 
-<body style="background-color: #3a3a3a;">
+<body>
 
-    <div th:replace="frags/fragNav :: nav"></div>
+  <div th:replace="frags/fragNav :: nav"></div>
 
-	<div class="col-lg-6 col-md-6 col-sm-6 mt-5 container justify-content-center">
+	<div class="col-lg-6 col-md-6 col-sm-6 pt-5 container justify-content-center">
 		<h1 class="panel-title display-3 text-light text-center" th:if="${estu.nome == NULL}">Adicionar Estudante</h1>
 		<h1 class="panel-title display-3 text-light text-center" th:if="${estu.nome != NULL}">Editar Estudante</h1>
 		<div class="card">
 			<div class="card-body">
-				<form th:action="@{/estudantes}" th:object="${estu}" method="POST">
+				<form th:action="${estu.nome == NULL} ? @{/estudantes} : @{/estudantes/editar/{id}(id=${estu.id})}" th:object="${estu}" method="POST">
                     <div class="form-group">
                         <label>Nome</label>
                         <input type="text" name="nome" th:field="*{nome}" class="form-control"
                         placeholder="Digite o nome"/>
-                        <label>Email</label>
+                        <label class="pt-1">Email</label>
                         <input type="text" name="email" th:field="*{email}" class="form-control"
                         placeholder="Digite o e-mail"/>
                         <div class="input-group mb-3 mt-4">
                             <div class="input-group-prepend">
                               <label class="input-group-text" for="salas">Sala</label>
                             </div>
-                            <select class="custom-select" id=s>
-                              <option selected>SEM SALA</option>
-                              <option th:each="s : ${salas}" th:text="${s.desc}"></option>
+                            <select class="custom-select" th:field="*{sala.desc}" id="salas">
+                              <option value="">SEM SALA</option>
+                              <option th:each="s : ${salas}" th:text="${s.desc}" th:value="${s.desc}"></option>
                             </select>
                           </div>
                     </div>
                     
                     <div class="box-footer">
 						<div class="row mt-4">
-							<button type="submit" class="btn btn-primary ml-3">Adicionar</button>
+							<button th:text="${estu.nome == NULL} ? 'Adicionar' : 'Editar'" type="submit" class="btn btn-primary ml-3"></button>
 							<a th:href="@{/estudantes}" class="btn btn-primary ml-3">Voltar</a>
 						</div>
 					</div>
@@ -54,5 +55,19 @@
 
 		</div>
 	</div>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    const list = document.querySelectorAll('.list');
+    function activeLink(){
+      list.forEach((item) =>
+      item.classList.remove('active'));
+      this.classList.add('active');
+    }
+      list.forEach((item) =>
+      item.addEventListener('click', activeLink));
+  </script>
 </body>
 </html>

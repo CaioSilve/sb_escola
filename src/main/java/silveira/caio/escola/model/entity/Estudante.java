@@ -22,7 +22,7 @@ public class Estudante {
 	private Long id;
 	private String nome;
 	private String email;
-	@ManyToOne
+	@ManyToOne(optional = true)
 	private Sala sala;
 	@OneToMany(mappedBy = "id.estu")
 	private List<Nota> notas = new ArrayList<>();
