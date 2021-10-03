@@ -1,5 +1,8 @@
 package silveira.caio.escola.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -22,14 +25,32 @@ public class EstudanteController {
 	
 	@GetMapping
 	public ModelAndView getAllEstudantes(){
-		ModelAndView mv = new ModelAndView("Estudantes");
+		ModelAndView mv = new ModelAndView("Lista");
 		
 		mv.addObject("estudantes", serv.findAllEstudante());
+		mv.addObject("tipo", "Estudante");
 		
 		mv.setStatus(HttpStatus.OK);
 
 		return mv;
 	}
+	
+	@PostMapping
+	public ModelAndView getEstudante(@ModelAttribute("filtro") Object filtro){
+		ModelAndView mv = new ModelAndView("Lista");
+		
+		List<Estudante> lista = serv.findAllEstudante().stream()
+				.filter(o-> o.getNome().equals(filtro.toString()))
+				.collect(Collectors.toList());
+		
+		mv.addObject("estudantes", lista); 
+		mv.addObject("tipo", "Estudante");
+		
+		mv.setStatus(HttpStatus.OK);
+
+		return mv;
+	}
+	
 	
 	@GetMapping("/novo")
 	public ModelAndView setEstuForm() {
@@ -44,7 +65,7 @@ public class EstudanteController {
 		return mv;
 	}
 	
-	@PostMapping
+	@PostMapping("/novo")
 	public ModelAndView addEstu(@ModelAttribute("estu") Estudante estu) {
 		ModelAndView mv = new ModelAndView();
 		

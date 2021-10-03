@@ -43,7 +43,7 @@ public class SbEscolaApplication implements CommandLineRunner {
 		Disciplina d5 = new Disciplina("Programação mobile");
 		
 		repoDisc.saveAll(Arrays.asList(d1,d2,d3,d4,d5));
-		
+		 
 		
 		Sala s1 = new Sala("1B", 2, repoDisc.findAll());
 		Sala s2 = new Sala("3A", 5, Arrays.asList(d4,d5));
@@ -51,7 +51,7 @@ public class SbEscolaApplication implements CommandLineRunner {
 		repoSala.saveAll(Arrays.asList(s1,s2));
 		
 		
-		Estudante es1 = new Estudante("Caio Silveira", "caio@gmai.com", s1);
+		Estudante es1 = new Estudante("Caio Silveira, o mais gato de todos", "caio@gmai.com", s1);
 		Estudante es2 = new Estudante("Gisele Matos", "gisele@gmai.com", null);
 		Estudante es3 = new Estudante("Otávio Zigueira", "otavio@gmai.com", s1);
 		Estudante es4 = new Estudante("Laiane Ribeiro", "laiane@gmai.com", s2);

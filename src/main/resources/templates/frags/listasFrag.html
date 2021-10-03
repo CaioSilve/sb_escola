@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!--ESTUDANTES-->
+
+    <div th:fragment="Estudante">
+        <div class="row mb-3 ml-2">
+            <a th:href="@{/estudantes/novo}" class="btn btn-primary">Adicionar estudante</a>
+            <form th:action="@{/estudantes}" method="POST">
+                <div class="input-group ml-2">
+                    <input type="text" name="filtro" th:value="${filtro}" class="form-control"
+                        placeholder="Digite o nome ou id" />
+                    <div class="input-group-prepend">
+                        <button type="submit" class="btn btn-primary">
+                            <ion-icon name="paper-plane-outline" style="text-align: center;"></ion-icon>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="scroll">
+            <table class="table table-hover table-striped table-dark table-bordered">
+                <thead>
+                    <tr>
+                        <th class="col col-sm-1">#</th>
+                        <th class="col col-sm-3">Nome</th>
+                        <th class="col col-sm-4">Email</th>
+                        <th class="col col-sm-auto">Sala</th>
+                        <th class="col col-sm-2">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="e : ${estudantes}" th:class="${e.sala} ?: bg-info">
+                        <td th:text="${e.id}"></td>
+                        <td th:text="${e.nome}"></td>
+                        <td th:text="${e.email}"></td>
+                        <td th:text="${e.sala} ? ${e.sala.desc} : 'SEM SALA'"> </td>
+                        <td>
+                            <a th:href="@{/estudantes/editar/{id}(id=${e.id})}" class="btn btn-primary btn-m">Editar</a>
+                            <a th:href="@{/estudantes/deletar/{id}(id=${e.id})}"
+                                class="btn btn-danger ml-3 btn-sm">Deletar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!--Professores-->
+
+
+
+</body>
+
+</html>

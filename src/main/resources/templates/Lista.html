@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width" />
-	<title>Estudantes</title>
+	<title th:text="${tipo}"></title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 		integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
@@ -19,17 +19,14 @@
 
 	<div class="panel panel-default mb-2 ml-5 lista">
 		<div class="panel-heading">
-			<h3 class="panel-title display-4 text-light" th:text="Lista de ${tipo}s"></h3>
+			<h3 class="panel-title display-4 text-light">Lista de <a th:text="${tipo}"></a></h3>
 		</div>
 		<div class="panel-body">
 
-            <div class="row">
-                <div>
-                    <a th:href="@{/estudantes/novo}" class="btn btn-primary mb-3 ml-3" th:text="Adicionar ${tipo}"></a>
-                </div>
-            </div>
-            
+
             <div th:replace="frags/listasFrag :: ${tipo}"></div>
+
+
 		</div>
 	</div>
 

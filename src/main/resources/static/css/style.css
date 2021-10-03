@@ -3,12 +3,43 @@
 
 body{
     background: rgb(65, 65, 65);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 30%, rgb(0, 0, 0) 100%), url("../images/bg-masthead.jpg");
+    background-position: unset;
+    background-repeat: no-repeat;   
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+    background: #313131;
+}
     
+::-webkit-scrollbar-track {
+    border: 1px solid rgb(214, 214, 214);
+    border-radius: 0px;
+}
+    
+::-webkit-scrollbar-thumb {
+    background: rgb(165, 165, 165);  
+    border-radius: 0px;
+}
+    
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(71, 71, 71);  
 }
 
 .lista{
     padding-left: 60px;
     margin-right: 60px;
+}
+
+.scroll{
+    overflow-y: auto; 
+    display: block; 
+    height: 75vh; 
+    opacity: 0.9
 }
 
 
@@ -19,7 +50,7 @@ body{
     font-family: 'Roboto', sans-serif;
     height: 500px;
     background: #313131;
-    width: 70px;
+    width: 55px;
     box-shadow: 7px 0 0 #007bff;
     
     overflow-x: hidden;
@@ -36,8 +67,8 @@ body{
     top: 0;
     left: 0;
     width: 100%;
-    padding-left: 5px;
-    padding-top: 40px;
+    padding-left: 1px;
+    padding-top: 50px;
 }
 
 .menuLateral ul li{
