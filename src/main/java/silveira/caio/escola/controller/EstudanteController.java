@@ -1,5 +1,6 @@
 package silveira.caio.escola.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,14 +40,24 @@ public class EstudanteController {
 	public ModelAndView getEstudante(@ModelAttribute("filtro") Object filtro){
 		ModelAndView mv = new ModelAndView("Lista");
 		
-		List<Estudante> lista = serv.findAllEstudante().stream()
-				.filter(o-> o.getNome().equals(filtro.toString()))
-				.collect(Collectors.toList());
+		List<Estudante> lista = new ArrayList<Estudante>();
+		
+		try {
+			lista = serv.findAllEstudante().stream()
+					.filter(o-> o.getId() == Long.parseLong(filtro.toString()))
+					.collect(Collectors.toList());
+		}catch (Exception e) {
+			lista = serv.findAllEstudante().stream()
+					.filter(o-> o.getNome().toLowerCase().contains(filtro.toString().toLowerCase()))
+					.collect(Collectors.toList());
+		}
+	
 		
 		mv.addObject("estudantes", lista); 
 		mv.addObject("tipo", "Estudante");
 		
 		mv.setStatus(HttpStatus.OK);
+		
 
 		return mv;
 	}
@@ -54,9 +65,10 @@ public class EstudanteController {
 	
 	@GetMapping("/novo")
 	public ModelAndView setEstuForm() {
-		ModelAndView mv = new ModelAndView("FormEstudante");
+		ModelAndView mv = new ModelAndView("Form");
 		Estudante es = new Estudante();
 		
+		mv.addObject("tipo", "Estudante");
 		mv.addObject("estu", es);
 		mv.addObject("salas", serv.findAllSalas());
 		mv.setStatus(HttpStatus.OK);

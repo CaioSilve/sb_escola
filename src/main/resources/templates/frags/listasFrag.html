@@ -12,7 +12,7 @@
     <!--ESTUDANTES-->
 
     <div th:fragment="Estudante">
-        <div class="row mb-3 ml-2">
+        <div class="row mb-3" style="padding-left: 15px;">
             <a th:href="@{/estudantes/novo}" class="btn btn-primary">Adicionar estudante</a>
             <form th:action="@{/estudantes}" method="POST">
                 <div class="input-group ml-2">
@@ -25,6 +25,7 @@
                     </div>
                 </div>
             </form>
+            <a th:href="@{/estudantes}" class="btn btn-primary ml-4"><ion-icon name="refresh-outline"></ion-icon></a>
         </div>
 
         <div class="scroll">
@@ -47,6 +48,51 @@
                         <td>
                             <a th:href="@{/estudantes/editar/{id}(id=${e.id})}" class="btn btn-primary btn-m">Editar</a>
                             <a th:href="@{/estudantes/deletar/{id}(id=${e.id})}"
+                                class="btn btn-danger ml-3 btn-sm">Deletar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+    <!--Disciplinas-->
+
+    <div th:fragment="Disciplina">
+        <div class="row mb-3" style="padding-left: 15px;">
+            <a th:href="@{/disciplinas/novo}" class="btn btn-primary">Adicionar disciplina</a>
+            <form th:action="@{/disciplinas}" method="POST">
+                <div class="input-group ml-2">
+                    <input type="text" name="filtro" th:value="${filtro}" class="form-control"
+                        placeholder="Digite o nome ou id" />
+                    <div class="input-group-prepend">
+                        <button type="submit" class="btn btn-primary">
+                            <ion-icon name="paper-plane-outline" style="text-align: center;"></ion-icon>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <a th:href="@{/disciplinas}" class="btn btn-primary ml-4"><ion-icon name="refresh-outline"></ion-icon></a>
+        </div>
+
+        <div class="scroll">
+            <table class="table table-hover table-striped table-dark table-bordered">
+                <thead>
+                    <tr>
+                        <th class="col col-sm-1">#</th>
+                        <th class="col col-sm-3">Descrição</th>
+                        <th class="col col-sm-2">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="d : ${disciplinas}">
+                        <td th:text="${d.id}"></td>
+                        <td th:text="${d.desc}"></td>
+                        <td>
+                            <a th:href="@{/disciplinas/editar/{id}(id=${d.id})}" class="btn btn-primary btn-m">Editar</a>
+                            <a th:href="@{/disciplinas/deletar/{id}(id=${d.id})}"
                                 class="btn btn-danger ml-3 btn-sm">Deletar</a>
                         </td>
                     </tr>

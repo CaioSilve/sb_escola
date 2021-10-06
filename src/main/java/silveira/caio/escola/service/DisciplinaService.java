@@ -19,6 +19,10 @@ public class DisciplinaService {
 		return repo.findAll();
 	}
 	
+	public Disciplina findByIdDisci(Long id) {
+		return repo.getById(id);
+	}
+	
 	public void saveDisci(Disciplina obj) {
 		repo.save(obj);
 	}
