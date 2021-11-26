@@ -31,6 +31,7 @@ public class EstudanteController {
 		mv.addObject("estudantes", serv.findAllEstudante());
 		mv.addObject("tipo", "Estudante");
 		
+		
 		mv.setStatus(HttpStatus.OK);
 
 		return mv;

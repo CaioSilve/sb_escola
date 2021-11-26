@@ -59,6 +59,9 @@ public class SbEscolaApplication implements CommandLineRunner {
 	
 		repoEstu.saveAll(Arrays.asList(es1,es2,es3,es4,es5));
 		
+		
+		
+		
 	}
 
 }
